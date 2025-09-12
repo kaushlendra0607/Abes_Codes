@@ -112,5 +112,22 @@ int main(){
     // sort(arr.begin(),arr.end());
     // for(int i:arr) cout<<i<<" ";
     
+    // int n,l,s,u;
+    // cin>>n>>s>>l>>u;
+    // vector<int> arr(n);
+    // for(int i = 0;i<n;i++){
+    //     cin>>arr[i];
+    // }
+    // bool present = binary_search(arr.begin(),arr.end(),s);
+    // if(present){
+    //     cout<<"YES"<<" ";
+    // } else{
+    //     cout<<"NO"<<" ";
+    // }
+    // cout<< *(lower_bound(arr.begin(),arr.end(),l))<<" ";
+    // cout<< *(lower_bound(arr.begin(),arr.end(),u));
+    
+    
+    
     return 0;
 }
