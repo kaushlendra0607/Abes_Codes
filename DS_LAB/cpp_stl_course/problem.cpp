@@ -2,6 +2,7 @@
 #include<iostream>
 #include<vector>
 #include<algorithm>
+#include<string>
 using namespace std;
 int main(){
     // long long t;
@@ -127,7 +128,79 @@ int main(){
     // cout<< *(lower_bound(arr.begin(),arr.end(),l))<<" ";
     // cout<< *(lower_bound(arr.begin(),arr.end(),u));
     
+    int n;
+    string finalPotion;
+    string sample;
+    cout<<"Enter n: ";
+    cin>>n;
+    vector<string> arr(n);
+    vector<string> elements;
+    vector<string> elementsIng;
+    vector<string> specialElementsIng;
+    vector<int> index;
+    vector<int> potionIndex;
+    for(int i=0;i<n;i++) {
+        cout<<" Enter "<<i<<" th element: ";
+        cin>>arr[i];
+    }
+    for(const string &str:arr){
+        string part;
+        stringstream ss(str);
+        while(getline(ss,part,'=')){
+            elements.push_back(part);
+        }
+    }
+    int sele = elements.size();
+    for(int i=0;i<sele/2;i++){
+        string part;
+        stringstream ss(elements[2*i+1]);
+        while(getline(ss,part,'+')){
+            elementsIng.push_back(part);
+        }
+    }
+    cout<<"enter finla potion :";
+    cin>>finalPotion;
+    int sIng = elementsIng.size();
+    for(int i=0;i<sele;i++){
+        if(finalPotion == elements[i]){
+            index.push_back(i);
+        }
+    }
+    for(auto &i:index){
+        string part;
+        stringstream ss(elements[i+1]);
+        while(getline(ss,part,'+')){
+            specialElementsIng.push_back(part);
+        }
+    }
+    for(int i=0;i<sele/2;i++){
+        for(auto &j:specialElementsIng){
+            if(j == elements[2*i]){
+                potionIndex.push_back(2*i);
+            }
+        }
+    }
+    int potionCount,ingCount;
     
+
+    for(auto &i:elementsIng){
+        cout<<i<<endl;
+    }
+    for(auto &i:elements){
+        cout<<i<<endl;
+    }
+    for(auto &i:index){
+        cout<<" this is index "<<i<<endl;
+    }
+    for(auto &i:specialElementsIng){
+        cout<<"this is special "<<i<<endl;
+    }
+    for(auto &i:potionIndex){
+        cout<<"this is special index "<<i<<endl;
+    }
+
+    
+
     
     return 0;
 }
