@@ -3,45 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Log In</title>
     <style>
         table ,tr, th,td{
             border: 1px solid;
             padding: 6px;
             border-collapse: collapse;
         }
+        .anchor{
+            color: black;
+            background-color: #fff;
+            border: 1px solid;
+            padding: 5px;
+            border-radius: 5px;
+        }
+        .reset{
+              color: black;
+            background-color: #fff;
+            border: 1px solid;
+            padding: 6px;
+            border-radius: 5px;
+        }
+        .anchor:active{
+            color: black;
+        }
     </style>
 </head>
 <body>
-    <table style="width: 90vw; height: 80vh;">
+    <table style="width: 90vw; height: 80vh;text-align: center;">
         <tr style="background-color: rgb(222, 175, 114);">
         <th>Logo</th>
         <th colspan="4">Website Name</th>
         </tr>
         <tr style="background-color: rgb(250, 231, 206);">
-            <td>Home</td>
-            <td>Login</td>
-            <td>Registration</td>
-            <td>Catalogue</td>
-            <td>Cart</td>
+            <td><a href="#">Home</a></td>
+            <td><a href="#">Login</a></td>
+            <td><a href="#">Registration</a></td>
+            <td><a href="#">Catalogue</a></td>
+            <td><a href="#">Cart</a></td>
         </tr>
         <tr>
-            <td>CSE <br> ECE <br> EEE <br> CIVIL </td>
-            <td rowspan="4" colspan="4" style="text-align: center;">
-                Login Page
-                <div style="display: flex; align-items: center; justify-content: center; margin: 30px; gap: 8px;flex-direction: column;">
-                    <span><label for="userName">User Name:</label>
-                    <input type="text"></span>
-                    <span><label for="userName">Password:</label>
-                    <input type="password"></span>
-                </div>
-                <button style="margin: 5px; background-color: #fff;border-radius: 5px;"><a href="./exp3.html" style="color: red;text-decoration: none;display: inline-block; padding: 12px;" target="_blank">Submit</a></button>
-                <button style="padding: 12px; margin: 5px; background-color: #fff;color: red;border-radius: 5px;">Reset</button>
+            <td width="15%" valign="top">
+                <table border="1" width="100%" style="height: 100%; border-collapse: collapse;">
+                    <tr style="height: 25%;"><td align="center">CSE</td></tr>
+                    <tr style="height: 25%;"><td align="center">ECE</td></tr>
+                    <tr style="height: 25%;"><td align="center">EEE</td></tr>
+                    <tr style="height: 25%;"><td align="center">CIVIL</td></tr>
+                </table>
+            </td>
+            <td rowspan="4" colspan="4" style="text-align: center;position: relative;">
+                <section style="top: 40%;">
+                    <h1>Login Page</h1>
+                    <form>
+                        <label style="display: block; margin: 20px;">User Name : <input type="text"></label>
+                        <label style="display: block;margin: 20px;">Password : <input type="password"></label>
+                        <a href="#" class="anchor" style="margin: 20px;text-decoration: none;">Submit</a>
+                        <button class="reset">Reset</button>
+                    </form>
+                </section>
             </td>
         </tr>
     </table>
-    <script>
-
-    </script>
 </body>
 </html>
