@@ -16,7 +16,7 @@ int main(){
     int n;
     printf("Enter number of discs: ");
     scanf("%d",&n);
-    TOH(n,'s','m','d');
+    TOH(n,'1','2','3');
 
     return 0;
 }
