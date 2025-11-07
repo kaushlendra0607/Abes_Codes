@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HOME</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-size: large;
+    overflow: hidden;
+  }
+
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 60px;
+    width: 100%;
+    background: rgba(248, 173, 44, 0.9);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    z-index: 1000;
+  }
+
+  .logo_img {
+    width: 65px;
+    height: auto;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 25px;
+    list-style: none;
+  }
+
+  .nav-links li {
+    font-weight: bold;
+    cursor: pointer;
+  }
+  li{
+    list-style-type: none;
+  }
+  .nav-links li a{
+    text-decoration: none;
+    /* color: black; */
+  }
+
+  .side-bar {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 100px;
+    height: calc(100vh - 60px);
+    background: rgb(250, 231, 206);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    z-index: 999;
+  }
+  .sidebar-links{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 60%;
+  }
+
+  .main-body {
+    position: relative;
+    margin-top: 60px;
+    margin-left: 100px;
+    width: calc(100vw - 100px);
+    height: calc(100vh - 60px);
+    background: rgba(255, 255, 255, 0.881);
+    overflow-y: auto;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+  }
+</style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo-home">
+      <img src="./12f3f4ecc8d00b48041062625fa9ebed.jpg" alt="Logo" class="logo_img">
+    </div>
+    <ul class="nav-links">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Login</a></li>
+      <li><a href="#">Registration</a></li>
+      <li><a href="#">Catalogue</a></li>
+      <li><a href="#">Cart</a></li>
+    </ul>
+  </nav>
+
+  <div class="side-bar">
+    <ul class="sidebar-links">
+      <li>CSE</li>
+      <li>ECE</li>
+      <li>EEE</li>
+      <li>Civil</li>
+    </ul>
+  </div>
+
+  <div class="main-body">
+    
+  </div>
+</body>
+</html>
