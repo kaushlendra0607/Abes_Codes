@@ -12,9 +12,6 @@ void insertionSort(int arr[], int n) {
         }
         arr[j + 1] = key;
     }
-    for(int i=0;i<n;i++){
-        printf("%d ",arr[i]);
-    }
 }
 
 void selection_sort(int arr[],int n){
@@ -28,9 +25,6 @@ void selection_sort(int arr[],int n){
             }
             min = arr[i];
         }
-    }
-    for(int i=0;i<n;i++){
-        printf("%d ",arr[i]);
     }
 }
 
@@ -49,10 +43,47 @@ void bubble_sort(int arr[],int n){
         if(swapped == 0)
         break;
     }
-    for(int i=0;i<n;i++){
-        // cout<<arr[i]<<" ";
-        printf("%d ",arr[i]);
+}
+
+void merge(int arr[], int left,int mid, int right){
+    int n1 = mid-left+1;
+    int n2 = right - mid;
+    int L[n1],R[n2];
+    for (int i = 0; i < n1; i++)
+        L[i] = arr[left + i];
+    for (int j = 0; j < n2; j++)
+        R[j] = arr[mid + 1 + j];
+    int i = 0, j = 0, k = left;
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) {
+            arr[k] = L[i];
+            i++;
+        } else {
+            arr[k] = R[j];
+            j++;
+        }
+        k++;
     }
+    while (i < n1) {
+        arr[k] = L[i];
+        i++;
+        k++;
+    }
+    while (j < n2) {
+        arr[k] = R[j];
+        j++;
+        k++;
+    }
+}
+void mergeSort(int arr[], int left, int right) {
+    int a = right;
+    if (left >= right)
+        return;
+
+    int mid = left + (right - left) / 2;
+    mergeSort(arr, left, mid);
+    mergeSort(arr, mid + 1, right);
+    merge(arr, left, mid, right);
 }
 
 int main(){
@@ -65,7 +96,7 @@ int main(){
         scanf("%d",&arr[i]);
     }
     int choice;
-    printf("Enter 1 for bubble 2 for selection and 3 for insertion: ");
+    printf("Enter 1 for bubble 2 for selection and 3 for insertion 4 for merge: ");
     scanf("%d",&choice);
     switch (choice)
     {
@@ -81,12 +112,18 @@ int main(){
         insertionSort(arr,n);
         break;
     }
+    case 4:{
+        mergeSort(arr,0,n-1);
+        break;
+    }
     
     default:
         printf("Invalid Choice.");
         break;
     }
-    // bubble_sort(arr,n);
-    // selection_sort(arr,n);
+    for(int i=0;i<n;i++){
+        printf("%d ",arr[i]);
+    }
+
     return 0;
 }
