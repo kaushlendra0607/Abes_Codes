@@ -70,6 +70,8 @@
 
   .main-body {
     position: relative;
+    /* top: 60px;
+    left: 100px; */
     margin-top: 60px;
     margin-left: 100px;
     width: calc(100vw - 100px);

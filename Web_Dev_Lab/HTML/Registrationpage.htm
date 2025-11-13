@@ -5,6 +5,22 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Registration Form</title>
+  <link rel="stylesheet" href="../CSS/style.css">
+  <link rel="stylesheet" href="../CSS/Registration.css">
+  <style>
+    .main-body {
+  margin-top: 60px;          /* below navbar */
+  margin-left: 100px;        /* beside sidebar */
+  width: calc(100vw - 100px);
+  min-height: calc(100vh - 60px);
+  background: #f5f7fa;
+  padding: 40px 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+}
+  </style>
 </head>
 
 <body>
@@ -31,50 +47,58 @@
   </div>
 
   <div class="main-body">
-    <h1>Registration Form</h1>
-    <form>
-      <label>First Name</label>
-      <input type="text" name="fname" required /><br /><br />
+    <h1 class="main-heading">Registration Form</h1>
+    <form class="main-form">
+      <div class="dob-sec">
+        <label>First Name</label>
+        <input type="text" name="fname" required /><br /><br />
 
-      <label>Last Name</label>
-      <input type="text" name="lname" required /><br /><br />
+        <label>Last Name</label>
+        <input type="text" name="lname" required /><br /><br />
 
-      <label>Password</label>
-      <input type="password" name="password" /><br /><br />
+        <label>Password</label>
+        <input type="password" name="password" /><br /><br />
 
-      <label>Date Of Birth</label>
-      <input type="date" name="date" required /><br /><br />
+        <label>Date Of Birth</label>
+        <input type="date" name="date" required /><br /><br />
+      </div>
 
-      <label>Gender</label><br />
-      <input type="radio" name="gender" value="male" /> Male
-      <input type="radio" name="gender" value="female" /> Female
-      <input type="radio" name="gender" value="others" /> Others<br /><br />
+      <div class="gen-sec">
+        <label>Gender</label><br />
+        <input type="radio" name="gender" value="male" /> Male
+        <input type="radio" name="gender" value="female" /> Female
+        <input type="radio" name="gender" value="others" /> Others<br /><br />
 
-      <label>Email</label>
-      <input type="email" name="email" required /><br /><br />
+        <label>Email</label>
+        <input type="email" name="email" required /><br /><br />
 
-      <label>Phone</label>
-      <input type="tel" name="phone" required /><br /><br />
+        <label>Phone</label>
+        <input type="tel" name="phone" required /><br /><br />
+      </div>
 
-      Languages Known <br /><br />
-      <input type="checkbox" name="lang" value="eng" /> English <br /><br />
-      <input type="checkbox" name="lang" value="telg" /> Telugu <br /><br />
-      <input type="checkbox" name="lang" value="hin" /> Hindi <br /><br />
-      <input type="checkbox" name="lang" value="tam" /> Tamil <br /><br />
-      <input type="checkbox" name="lang" value="pun" /> Punjabi <br /><br />
+      <div class="lang-sec">
+        Languages Known <br /><br />
+        <input type="checkbox" name="lang" value="eng" /> English <br /><br />
+        <input type="checkbox" name="lang" value="telg" /> Telugu <br /><br />
+        <input type="checkbox" name="lang" value="hin" /> Hindi <br /><br />
+        <input type="checkbox" name="lang" value="tam" /> Tamil <br /><br />
+        <input type="checkbox" name="lang" value="pun" /> Punjabi <br /><br />
 
-      Address<br /><br />
-      <label>Flat number</label>
-      <input type="text" /><br /><br />
-      <label>Society name</label>
-      <input type="text" /><br /><br />
-      <label>city</label>
-      <input type="text" /><br /><br />
-      <label>State</label>
-      <input type="text" /><br /><br />
+        Address<br /><br />
+        <label>Flat number</label>
+        <input type="text" /><br /><br />
+        <label>Society name</label>
+        <input type="text" /><br /><br />
+        <label>city</label>
+        <input type="text" /><br /><br />
+        <label>State</label>
+        <input type="text" /><br /><br />
+      </div>
 
-      <button>Register</button>
-      <button>Reset</button>
+      <div class="btn">
+        <button>Register</button>
+        <button>Reset</button>
+      </div>
     </form>
     <hr />
   </div>
