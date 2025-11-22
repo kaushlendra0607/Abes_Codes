@@ -86,6 +86,36 @@ void mergeSort(int arr[], int left, int right) {
     merge(arr, left, mid, right);
 }
 
+void swap(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int partition(int arr[], int low, int high) {
+    int pivot = arr[high];
+    int i = low - 1;
+
+    for(int j = low; j < high; j++) {
+        if(arr[j] < pivot) {
+            i++;
+            swap(&arr[i], &arr[j]);
+        }
+    }
+
+    swap(&arr[i + 1], &arr[high]);
+    return i + 1;
+}
+
+void quicksort(int arr[], int low, int high) {
+    if(low < high) {
+        int pi = partition(arr, low, high);
+
+        quicksort(arr, low, pi - 1);
+        quicksort(arr, pi + 1, high);
+    }
+}
+
 int main(){
     int n;
     printf("Enter size of array: ");
@@ -96,7 +126,7 @@ int main(){
         scanf("%d",&arr[i]);
     }
     int choice;
-    printf("Enter 1 for bubble 2 for selection and 3 for insertion 4 for merge: ");
+    printf("Enter 1 for bubble 2 for selection and 3 for insertion 4 for merge 5 for quick: ");
     scanf("%d",&choice);
     switch (choice)
     {
@@ -114,6 +144,10 @@ int main(){
     }
     case 4:{
         mergeSort(arr,0,n-1);
+        break;
+    }
+    case 5:{
+        quicksort(arr,0,n-1);
         break;
     }
     
