@@ -1,149 +1,248 @@
-/* ==============================
-   MAIN BODY STYLING
-   ============================== */
 
-
-
-/* Heading */
-.main-heading {
-  text-align: center;
-  font-size: 2em;
-  color: #333;
-  margin-bottom: 25px;
-  letter-spacing: 1px;
-  font-weight: 700;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif
 }
 
-/* ==============================
-   FORM STYLING
-   ============================== */
+body {
+    background-color: #f0f2f5;
+    overflow-x: hidden;
+}
+
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 60px;
+    width: 100%;
+    background: #f8ad2c;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.logo_img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: white;
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 600;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.nav-links li a:hover, 
+.nav-links li a.active {
+    color: #333;
+}
+
+
+.side-bar {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 100px;
+    height: calc(100vh - 60px);
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    padding-top: 40px;
+    z-index: 999;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+}
+
+.sidebar-links {
+    list-style: none;
+    width: 100%;
+    text-align: center;
+}
+
+.sidebar-links li {
+    margin-bottom: 30px;
+}
+
+.sidebar-links li a {
+    text-decoration: none;
+    color: #555;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.sidebar-links li a:hover {
+    color: #f8ad2c;
+}
+
+
+.main-body {
+    margin-top: 60px;
+    margin-left: 100px;
+    width: calc(100% - 100px);
+    min-height: calc(100vh - 60px);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 20px;
+}
+
+
+.form-container {
+    background: white;
+    width: 100%;
+    max-width: 800px;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.main-heading {
+    color: #333;
+    font-size: 28px;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.sub-text {
+    text-align: center;
+    color: #777;
+    margin-bottom: 30px;
+    font-size: 14px;
+}
 
 .main-form {
-  background: #fff;
-  width: 90%;
-  max-width: 700px;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  padding: 40px 50px;
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  animation: fadeIn 0.6s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(15px); }
-  to { opacity: 1; transform: translateY(0); }
+.section-title {
+    color: #f8ad2c;
+    font-size: 18px;
+    border-bottom: 2px solid #f0f2f5;
+    padding-bottom: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
-/* Each section inside the form */
-.main-form div {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
 }
 
-/* Labels */
-.main-form label {
-  font-weight: 600;
-  color: #333;
+.form-group {
+    display: flex;
+    flex-direction: column;
 }
 
-/* Inputs */
-.main-form input[type="text"],
-.main-form input[type="password"],
-.main-form input[type="email"],
-.main-form input[type="tel"],
-.main-form input[type="date"] {
-  padding: 10px;
-  border: 1.5px solid #ccc;
-  border-radius: 6px;
-  font-size: 1em;
-  transition: border-color 0.3s ease;
+.form-group label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #444;
+    margin-bottom: 8px;
 }
 
-.main-form input:focus {
-  border-color: #f8ad2c;
-  outline: none;
+.form-group input[type="text"],
+.form-group input[type="password"],
+.form-group input[type="date"],
+.form-group input[type="email"],
+.form-group input[type="tel"] {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.3s;
+    width: 100%;
 }
 
-/* ==============================
-   RADIO & CHECKBOX GROUPS
-   ============================== */
-
-.gen-sec input[type="radio"],
-.lang-sec input[type="checkbox"] {
-  margin-right: 8px;
-  accent-color: #f8ad2c; /* modern browsers */
+.form-group input:focus {
+    border-color: #f8ad2c;
+    box-shadow: 0 0 0 3px rgba(248, 173, 44, 0.2);
 }
 
-.gen-sec {
-  border-top: 1px solid #ddd;
-  padding-top: 15px;
+.radio-group, .checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding-top: 10px;
 }
 
-.lang-sec {
-  border-top: 1px solid #ddd;
-  padding-top: 15px;
+.radio-group label, .checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    font-weight: 400;
 }
 
-/* Make labels inside same line if desired */
-.gen-sec label, 
-.lang-sec label {
-  font-weight: 600;
-  color: #333;
+.btn-container {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
 }
 
-/* ==============================
-   BUTTONS
-   ============================== */
-
-.btn {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 20px;
+button {
+    flex: 1;
+    padding: 14px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
-.btn button {
-  background: #f8ad2c;
-  color: white;
-  border: none;
-  padding: 10px 25px;
-  font-size: 1em;
-  font-weight: bold;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.3s ease;
+.btn-primary {
+    background-color: #f8ad2c;
+    color: white;
 }
 
-.btn button:hover {
-  background: #f89c00;
-  transform: scale(1.05);
+.btn-primary:hover {
+    background-color: #e09615;
 }
 
-.btn button:nth-child(2) {
-  background: #ccc;
-  color: #333;
+.btn-secondary {
+    background-color: white;
+    border: 1px solid #ddd;
+    color: #555;
 }
 
-.btn button:nth-child(2):hover {
-  background: #bdbdbd;
+.btn-secondary:hover {
+    background-color: #f9f9f9;
+    border-color: #ccc;
 }
 
-/* ==============================
-   RESPONSIVE DESIGN
-   ============================== */
 
 @media (max-width: 768px) {
-  .main-body {
-    margin-left: 0;
-    width: 100%;
-    padding: 20px;
-  }
+    .main-body {
+        margin-left: 0;
+        width: 100%;
+        padding-top: 80px;
+    }
 
-  .main-form {
-    width: 100%;
-    padding: 25px;
-  }
+    .side-bar {
+        display: none;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
 }
