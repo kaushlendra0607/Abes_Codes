@@ -43,11 +43,11 @@
         <div class="form-row">
           <div class="form-group">
             <label>First Name</label>
-            <input type="text" name="fname" placeholder="John" required />
+            <input type="text" name="fname" placeholder="John" required id="firstName" />
           </div>
           <div class="form-group">
             <label>Last Name</label>
-            <input type="text" name="lname" placeholder="Doe" required />
+            <input type="text" name="lname" placeholder="Doe" required id="secondName" />
           </div>
         </div>
 
@@ -80,7 +80,7 @@
 
         <div class="form-group">
           <label>Password</label>
-          <input type="password" name="password" placeholder="********" />
+          <input type="password" name="password" placeholder="********" id="pass" />
         </div>
 
         <h3 class="section-title">Address</h3>
@@ -118,7 +118,7 @@
         </div>
 
         <div class="btn-container">
-          <button type="submit" class="btn-primary">Register Now</button>
+          <button type="submit" class="btn-primary" onclick="logging()">Register Now</button>
           <button type="reset" class="btn-secondary">Reset</button>
         </div>
 
@@ -126,4 +126,26 @@
     </div>
   </div>
 </body>
+
+<script>
+  const logging = ()=>{
+    const nameElement = document.getElementById("firstName");
+    const naElement = document.getElementById("secondName");
+    const naming = nameElement.value+naElement.value;
+    const letterPattern = /^[a-zA-Z\s]+$/;
+    if(!letterPattern.test(naming) || naming.length < 6){
+      alert("Invalid Name! Must be atleast 6 char long and should not contain numbers");
+      event.preventDefault();
+    }else{
+      console.log(naming);
+    }
+
+    const passValue = document.getElementById("pass").value;
+    if(passValue.length < 6){
+      alert("Password should be min 6 charaters long!");
+      event.preventDefault();
+    }
+  }
+</script>
+
 </html>
