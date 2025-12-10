@@ -52,5 +52,6 @@
         "variant": "cpp",
         "sstream": "cpp",
         "regex": "cpp"
-    }
+    },
+    "liveServer.settings.port": 5501
 }
