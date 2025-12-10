@@ -7,6 +7,9 @@
     body {
       background-color: black;
       color: white;
+      display: flex;
+      place-items: center;
+      flex-direction: column;
     }
 
     .lets-style-baby {
@@ -131,14 +134,35 @@
     function clearing() {
       document.querySelector('.shownHere').textContent = 'Give Inputs';
     }
-    function inputHere(pressed) {
-      document.addEventListener('keydown', function (event) {
-        if (pressed === event.key) {
-          showing();
-          updateCalculation(pressed);
+    document.addEventListener('keydown', function (event) {
+      const key = event.key;
+      console.log('Key Pressed:', key);
+      const validInputs = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '+', '-', '*', '/'];
+      if (validInputs.includes(key)) {
+        event.preventDefault();
+        updateCalculation(key);
+
+      } else if (key === 'Enter' || key === '=') {
+        event.preventDefault();
+        try {
+          calculation = eval(calculation);
+        } catch (error) {
+          calculation = 'Error';
+          console.error('Calculation Error:', error);
         }
-      })
-    }
+        showing();
+
+      } else if (key === 'Backspace' || key === 'Delete') {
+        event.preventDefault();
+        if (key === 'Backspace' && calculation.length > 0) {
+          // Remove last character
+          calculation = calculation.slice(0, -1);
+          showing();
+        } else {
+          clearing();
+        }
+      }
+    });
   </script>
 </body>
 
