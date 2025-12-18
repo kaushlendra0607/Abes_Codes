@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Calendar, MapPin, Clock, Users, Filter, Search, Plus, Edit2, Trash2, History, LogIn, LogOut } from 'lucide-react';
+import { Calendar, MapPin, Clock, Users, Filter, Search, Plus, Edit2, Trash2, History, LogIn, LogOut, TrendingUp, Star, Award } from 'lucide-react';
 
 // Static event data
 const initialEvents = [
@@ -105,99 +105,144 @@ const completedEvents = [
   }
 ];
 
-// Category configurations
+// Category configurations with gradients
 const categories = [
-  { id: 'all', name: 'All Events', color: 'bg-gray-500' },
-  { id: 'technical', name: 'Technical', color: 'bg-blue-500' },
-  { id: 'sports', name: 'Sports', color: 'bg-green-500' },
-  { id: 'cultural', name: 'Cultural', color: 'bg-purple-500' },
-  { id: 'literary', name: 'Literary', color: 'bg-yellow-500' }
+  { id: 'all', name: 'All Events', gradient: 'from-gray-600 to-gray-800', icon: '🎯' },
+  { id: 'technical', name: 'Technical', gradient: 'from-blue-500 to-indigo-600', icon: '💻' },
+  { id: 'sports', name: 'Sports', gradient: 'from-green-500 to-emerald-600', icon: '⚽' },
+  { id: 'cultural', name: 'Cultural', gradient: 'from-purple-500 to-pink-600', icon: '🎭' },
+  { id: 'literary', name: 'Literary', gradient: 'from-yellow-500 to-orange-600', icon: '📚' }
 ];
 
-// Event Card Component
+// Event Card Component with enhanced design
 const EventCard = ({ event, isAdmin, onEdit, onDelete }) => {
   const daysUntilDeadline = Math.ceil(
     (new Date(event.registrationDeadline) - new Date()) / (1000 * 60 * 60 * 24)
   );
   
-  const categoryColor = categories.find(c => c.id === event.category)?.color || 'bg-gray-500';
+  const categoryData = categories.find(c => c.id === event.category) || categories[0];
+  const participationPercentage = (event.currentParticipants / event.maxParticipants) * 100;
 
   return (
-    <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow p-6 border border-gray-200">
-      <div className="flex justify-between items-start mb-3">
-        <div className="flex-1">
-          <h3 className="text-xl font-bold text-gray-800 mb-2">{event.title}</h3>
-          <span className={`inline-block ${categoryColor} text-white text-xs px-3 py-1 rounded-full`}>
-            {event.category}
-          </span>
-        </div>
-        {isAdmin && (
-          <div className="flex gap-2">
-            <button
-              onClick={() => onEdit(event)}
-              className="p-2 text-blue-600 hover:bg-blue-50 rounded"
-            >
-              <Edit2 size={18} />
-            </button>
-            <button
-              onClick={() => onDelete(event.id)}
-              className="p-2 text-red-600 hover:bg-red-50 rounded"
-            >
-              <Trash2 size={18} />
-            </button>
-          </div>
-        )}
-      </div>
+    <div className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 hover:-translate-y-2">
+      {/* Gradient header */}
+      <div className={`h-2 bg-gradient-to-r ${categoryData.gradient}`}></div>
       
-      <p className="text-gray-600 text-sm mb-4 line-clamp-2">{event.description}</p>
-      
-      <div className="space-y-2 text-sm text-gray-700">
-        <div className="flex items-center gap-2">
-          <MapPin size={16} className="text-gray-500" />
-          <span>{event.venue}</span>
+      {/* Trending badge for popular events */}
+      {participationPercentage > 70 && (
+        <div className="absolute top-6 right-4 bg-gradient-to-r from-amber-400 to-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1 shadow-lg z-10">
+          <TrendingUp size={14} />
+          Trending
         </div>
-        <div className="flex items-center gap-2">
-          <Calendar size={16} className="text-gray-500" />
-          <span>{new Date(event.eventDate).toLocaleDateString()} at {event.eventTime}</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <Clock size={16} className="text-gray-500" />
-          <span>Registration deadline: {new Date(event.registrationDeadline).toLocaleDateString()}</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <Users size={16} className="text-gray-500" />
-          <span>{event.currentParticipants}/{event.maxParticipants} registered</span>
-        </div>
-      </div>
+      )}
 
-      <div className="mt-4 flex items-center justify-between">
-        <div className="flex gap-2 flex-wrap">
-          {event.registrationOpen ? (
-            <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">
-              Registration Open
-            </span>
-          ) : (
-            <span className="bg-red-100 text-red-800 text-xs px-2 py-1 rounded">
-              Registration Closed
-            </span>
-          )}
-          {daysUntilDeadline <= 3 && daysUntilDeadline > 0 && (
-            <span className="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">
-              Closing Soon ({daysUntilDeadline}d left)
-            </span>
+      <div className="p-6">
+        <div className="flex justify-between items-start mb-4">
+          <div className="flex-1">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-2xl">{categoryData.icon}</span>
+              <span className={`bg-gradient-to-r ${categoryData.gradient} text-white text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide`}>
+                {event.category}
+              </span>
+            </div>
+            <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-purple-600 transition-all duration-300">
+              {event.title}
+            </h3>
+          </div>
+          {isAdmin && (
+            <div className="flex gap-2">
+              <button
+                onClick={() => onEdit(event)}
+                className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+              >
+                <Edit2 size={18} />
+              </button>
+              <button
+                onClick={() => onDelete(event.id)}
+                className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+              >
+                <Trash2 size={18} />
+              </button>
+            </div>
           )}
         </div>
-        {!isAdmin && event.registrationOpen && (
-          <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm">
-            Register
-          </button>
-        )}
+        
+        <p className="text-gray-600 text-sm mb-5 line-clamp-2 leading-relaxed">{event.description}</p>
+        
+        <div className="space-y-3 mb-5">
+          <div className="flex items-center gap-3 text-sm">
+            <div className="p-2 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg">
+              <MapPin size={16} className="text-blue-600" />
+            </div>
+            <span className="text-gray-700 font-medium">{event.venue}</span>
+          </div>
+          <div className="flex items-center gap-3 text-sm">
+            <div className="p-2 bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg">
+              <Calendar size={16} className="text-purple-600" />
+            </div>
+            <span className="text-gray-700 font-medium">
+              {new Date(event.eventDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} at {event.eventTime}
+            </span>
+          </div>
+          <div className="flex items-center gap-3 text-sm">
+            <div className="p-2 bg-gradient-to-br from-orange-50 to-orange-100 rounded-lg">
+              <Clock size={16} className="text-orange-600" />
+            </div>
+            <span className="text-gray-700 font-medium">
+              Deadline: {new Date(event.registrationDeadline).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+            </span>
+          </div>
+        </div>
+
+        {/* Progress bar for participants */}
+        <div className="mb-5">
+          <div className="flex justify-between items-center mb-2">
+            <span className="text-xs font-semibold text-gray-600 flex items-center gap-1">
+              <Users size={14} />
+              Participants
+            </span>
+            <span className="text-xs font-bold text-gray-900">
+              {event.currentParticipants}/{event.maxParticipants}
+            </span>
+          </div>
+          <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+            <div 
+              className={`h-full rounded-full bg-gradient-to-r ${categoryData.gradient} transition-all duration-500`}
+              style={{ width: `${participationPercentage}%` }}
+            ></div>
+          </div>
+        </div>
+
+        <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+          <div className="flex gap-2 flex-wrap">
+            {event.registrationOpen ? (
+              <span className="bg-gradient-to-r from-green-400 to-emerald-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-md flex items-center gap-1">
+                <Star size={12} fill="currentColor" />
+                Open
+              </span>
+            ) : (
+              <span className="bg-gradient-to-r from-red-400 to-rose-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-md">
+                Closed
+              </span>
+            )}
+            {daysUntilDeadline <= 3 && daysUntilDeadline > 0 && (
+              <span className="bg-gradient-to-r from-amber-400 to-orange-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-md animate-pulse">
+                {daysUntilDeadline}d left
+              </span>
+            )}
+          </div>
+          {!isAdmin && event.registrationOpen && (
+            <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2.5 rounded-xl hover:from-blue-700 hover:to-purple-700 text-sm font-bold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+              Register Now
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
 };
 
-// Admin Event Form
+// Admin Event Form with beautiful design
 const EventForm = ({ event, onSave, onCancel }) => {
   const [formData, setFormData] = useState(event || {
     title: '',
@@ -218,127 +263,130 @@ const EventForm = ({ event, onSave, onCancel }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6">
-        <h2 className="text-2xl font-bold mb-4">{event ? 'Edit Event' : 'Create New Event'}</h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium mb-1">Event Title</label>
+    <div className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-fadeIn">
+      <div className="bg-white rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+        <div className="sticky top-0 bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6 rounded-t-3xl">
+          <h2 className="text-3xl font-bold">{event ? '✏️ Edit Event' : '✨ Create New Event'}</h2>
+          <p className="text-blue-100 mt-1">Fill in the details to {event ? 'update' : 'create'} an amazing event</p>
+        </div>
+        
+        <div className="p-8 space-y-6">
+          <div className="space-y-2">
+            <label className="block text-sm font-bold text-gray-700 flex items-center gap-2">
+              <Award size={16} className="text-blue-600" />
+              Event Title
+            </label>
             <input
               type="text"
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              className="w-full border border-gray-300 rounded px-3 py-2"
-              required
+              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all outline-none"
+              placeholder="Enter an exciting event title..."
             />
           </div>
           
-          <div>
-            <label className="block text-sm font-medium mb-1">Description</label>
+          <div className="space-y-2">
+            <label className="block text-sm font-bold text-gray-700">Description</label>
             <textarea
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              className="w-full border border-gray-300 rounded px-3 py-2"
-              rows="3"
-              required
+              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all outline-none resize-none"
+              rows="4"
+              placeholder="Describe what makes this event special..."
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium mb-1">Category</label>
+          <div className="grid grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label className="block text-sm font-bold text-gray-700">Category</label>
               <select
                 value={formData.category}
                 onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                className="w-full border border-gray-300 rounded px-3 py-2"
+                className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all outline-none bg-white"
               >
-                <option value="technical">Technical</option>
-                <option value="sports">Sports</option>
-                <option value="cultural">Cultural</option>
-                <option value="literary">Literary</option>
+                <option value="technical">💻 Technical</option>
+                <option value="sports">⚽ Sports</option>
+                <option value="cultural">🎭 Cultural</option>
+                <option value="literary">📚 Literary</option>
               </select>
             </div>
             
-            <div>
-              <label className="block text-sm font-medium mb-1">Venue</label>
+            <div className="space-y-2">
+              <label className="block text-sm font-bold text-gray-700">Venue</label>
               <input
                 type="text"
                 value={formData.venue}
                 onChange={(e) => setFormData({ ...formData, venue: e.target.value })}
-                className="w-full border border-gray-300 rounded px-3 py-2"
-                required
+                className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all outline-none"
+                placeholder="Event location"
               />
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium mb-1">Event Date</label>
+          <div className="grid grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label className="block text-sm font-bold text-gray-700">Event Date</label>
               <input
                 type="date"
                 value={formData.eventDate}
                 onChange={(e) => setFormData({ ...formData, eventDate: e.target.value })}
-                className="w-full border border-gray-300 rounded px-3 py-2"
-                required
+                className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all outline-none"
               />
             </div>
             
-            <div>
-              <label className="block text-sm font-medium mb-1">Event Time</label>
+            <div className="space-y-2">
+              <label className="block text-sm font-bold text-gray-700">Event Time</label>
               <input
                 type="time"
                 value={formData.eventTime}
                 onChange={(e) => setFormData({ ...formData, eventTime: e.target.value })}
-                className="w-full border border-gray-300 rounded px-3 py-2"
-                required
+                className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all outline-none"
               />
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium mb-1">Registration Deadline</label>
+          <div className="grid grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label className="block text-sm font-bold text-gray-700">Registration Deadline</label>
               <input
                 type="date"
                 value={formData.registrationDeadline}
                 onChange={(e) => setFormData({ ...formData, registrationDeadline: e.target.value })}
-                className="w-full border border-gray-300 rounded px-3 py-2"
-                required
+                className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all outline-none"
               />
             </div>
             
-            <div>
-              <label className="block text-sm font-medium mb-1">Max Participants</label>
+            <div className="space-y-2">
+              <label className="block text-sm font-bold text-gray-700">Max Participants</label>
               <input
                 type="number"
                 value={formData.maxParticipants}
                 onChange={(e) => setFormData({ ...formData, maxParticipants: parseInt(e.target.value) })}
-                className="w-full border border-gray-300 rounded px-3 py-2"
-                required
+                className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all outline-none"
               />
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3 p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl border-2 border-green-200">
             <input
               type="checkbox"
               checked={formData.registrationOpen}
               onChange={(e) => setFormData({ ...formData, registrationOpen: e.target.checked })}
-              className="rounded"
+              className="w-5 h-5 rounded text-green-600 focus:ring-2 focus:ring-green-500"
             />
-            <label className="text-sm font-medium">Registration Open</label>
+            <label className="text-sm font-bold text-green-800">Registration Open</label>
           </div>
 
-          <div className="flex gap-3 pt-4">
+          <div className="flex gap-4 pt-4">
             <button
               onClick={handleSubmit}
-              className="flex-1 bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+              className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 rounded-xl hover:from-blue-700 hover:to-purple-700 font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
             >
-              {event ? 'Update Event' : 'Create Event'}
+              {event ? '💾 Update Event' : '🚀 Create Event'}
             </button>
             <button
               onClick={onCancel}
-              className="flex-1 bg-gray-300 text-gray-700 py-2 rounded hover:bg-gray-400"
+              className="flex-1 bg-gray-200 text-gray-700 py-4 rounded-xl hover:bg-gray-300 font-bold text-lg transition-all duration-300"
             >
               Cancel
             </button>
@@ -382,7 +430,6 @@ export default function App() {
       );
     }
 
-    // Sort by registration deadline (closest first)
     return filtered.sort((a, b) => {
       const deadlineA = new Date(a.registrationDeadline);
       const deadlineB = new Date(b.registrationDeadline);
@@ -414,45 +461,49 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-800">Campus Engage</h1>
-            <p className="text-sm text-gray-600">
-              {isAdmin ? 'Admin Dashboard' : 'Discover & Register for Events'}
-            </p>
-          </div>
-          <div className="flex items-center gap-4">
-            {isAdmin && (
-              <>
-                <button
-                  onClick={() => setShowHistory(!showHistory)}
-                  className="flex items-center gap-2 px-4 py-2 bg-gray-200 rounded hover:bg-gray-300"
-                >
-                  <History size={18} />
-                  History
-                </button>
-                <button
-                  onClick={() => {
-                    setEditingEvent(null);
-                    setShowEventForm(true);
-                  }}
-                  className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-                >
-                  <Plus size={18} />
-                  Create Event
-                </button>
-              </>
-            )}
-            <button
-              onClick={() => setIsAdmin(!isAdmin)}
-              className="flex items-center gap-2 px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-900"
-            >
-              {isAdmin ? <LogOut size={18} /> : <LogIn size={18} />}
-              {isAdmin ? 'User View' : 'Admin View'}
-            </button>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50">
+      {/* Animated Header */}
+      <header className="sticky top-0 z-40 backdrop-blur-md bg-white/80 shadow-lg border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 py-6">
+          <div className="flex justify-between items-center">
+            <div>
+              <h1 className="text-4xl font-extrabold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-1">
+                🎓 College Events Hub
+              </h1>
+              <p className="text-sm text-gray-600 font-medium">
+                {isAdmin ? '⚙️ Admin Dashboard - Manage All Events' : '🌟 Discover Amazing Events & Register Now'}
+              </p>
+            </div>
+            <div className="flex items-center gap-3">
+              {isAdmin && (
+                <>
+                  <button
+                    onClick={() => setShowHistory(!showHistory)}
+                    className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-gray-700 to-gray-900 text-white rounded-xl hover:from-gray-800 hover:to-black font-bold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                  >
+                    <History size={18} />
+                    History
+                  </button>
+                  <button
+                    onClick={() => {
+                      setEditingEvent(null);
+                      setShowEventForm(true);
+                    }}
+                    className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl hover:from-blue-700 hover:to-purple-700 font-bold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                  >
+                    <Plus size={18} />
+                    Create Event
+                  </button>
+                </>
+              )}
+              <button
+                onClick={() => setIsAdmin(!isAdmin)}
+                className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-blue-700 text-white rounded-xl hover:from-indigo-700 hover:to-blue-800 font-bold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+              >
+                {isAdmin ? <LogOut size={18} /> : <LogIn size={18} />}
+                {isAdmin ? 'User View' : 'Admin View'}
+              </button>
+            </div>
           </div>
         </div>
       </header>
@@ -460,27 +511,33 @@ export default function App() {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 py-8">
         {showHistory && isAdmin ? (
-          <div>
+          <div className="animate-fadeIn">
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold text-gray-800">Event History</h2>
+              <div>
+                <h2 className="text-3xl font-bold bg-gradient-to-r from-gray-700 to-gray-900 bg-clip-text text-transparent">
+                  📜 Event History
+                </h2>
+                <p className="text-gray-600 mt-1">View all completed events</p>
+              </div>
               <button
                 onClick={() => setShowHistory(false)}
-                className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+                className="px-6 py-3 bg-gradient-to-r from-gray-600 to-gray-800 text-white rounded-xl hover:from-gray-700 hover:to-gray-900 font-bold shadow-lg transition-all duration-300"
               >
-                Back to Events
+                ← Back to Events
               </button>
             </div>
             <div className="grid gap-4">
               {history.map(event => (
-                <div key={event.id} className="bg-white p-4 rounded-lg shadow border border-gray-200">
+                <div key={event.id} className="bg-white p-6 rounded-2xl shadow-lg border-l-4 border-gray-500 hover:shadow-xl transition-all duration-300">
                   <div className="flex justify-between items-center">
                     <div>
-                      <h3 className="font-bold text-gray-800">{event.title}</h3>
-                      <p className="text-sm text-gray-600">
-                        Completed on {new Date(event.eventDate).toLocaleDateString()}
+                      <h3 className="font-bold text-gray-800 text-xl mb-1">{event.title}</h3>
+                      <p className="text-sm text-gray-500 flex items-center gap-2">
+                        <Calendar size={14} />
+                        Completed on {new Date(event.eventDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
                       </p>
                     </div>
-                    <span className="bg-gray-500 text-white text-xs px-3 py-1 rounded-full">
+                    <span className="bg-gradient-to-r from-gray-600 to-gray-800 text-white text-sm font-bold px-4 py-2 rounded-full">
                       {event.category}
                     </span>
                   </div>
@@ -490,87 +547,109 @@ export default function App() {
           </div>
         ) : (
           <>
-            {/* Search and Filters */}
-            <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
-              <div className="flex flex-col md:flex-row gap-4 mb-4">
-                <div className="flex-1 relative">
-                  <Search className="absolute left-3 top-3 text-gray-400" size={20} />
+            {/* Search and Filters with beautiful design */}
+            <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl p-8 mb-8 border border-gray-200">
+              <div className="flex flex-col md:flex-row gap-4 mb-6">
+                <div className="flex-1 relative group">
+                  <Search className="absolute left-4 top-4 text-gray-400 group-focus-within:text-blue-600 transition-colors" size={22} />
                   <input
                     type="text"
-                    placeholder="Search events..."
+                    placeholder="Search for amazing events..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full pl-14 pr-4 py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition-all outline-none text-lg"
                   />
                 </div>
               </div>
 
-              <div className="flex flex-wrap gap-3">
-                <div className="flex items-center gap-2">
-                  <Filter size={18} className="text-gray-500" />
-                  <span className="text-sm font-medium text-gray-700">Categories:</span>
+              <div className="space-y-6">
+                <div>
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="p-2 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg">
+                      <Filter size={20} className="text-white" />
+                    </div>
+                    <span className="text-lg font-bold text-gray-800">Filter by Category</span>
+                  </div>
+                  <div className="flex flex-wrap gap-3">
+                    {categories.map(category => (
+                      <button
+                        key={category.id}
+                        onClick={() => setSelectedCategory(category.id)}
+                        className={`px-6 py-3 rounded-2xl font-bold transition-all duration-300 transform hover:scale-105 shadow-md ${
+                          selectedCategory === category.id
+                            ? `bg-gradient-to-r ${category.gradient} text-white shadow-lg scale-105`
+                            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                        }`}
+                      >
+                        <span className="mr-2">{category.icon}</span>
+                        {category.name}
+                      </button>
+                    ))}
+                  </div>
                 </div>
-                {categories.map(category => (
-                  <button
-                    key={category.id}
-                    onClick={() => setSelectedCategory(category.id)}
-                    className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                      selectedCategory === category.id
-                        ? `${category.color} text-white`
-                        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                    }`}
-                  >
-                    {category.name}
-                  </button>
-                ))}
-              </div>
 
-              <div className="flex flex-wrap gap-3 mt-4">
-                <span className="text-sm font-medium text-gray-700">Registration Status:</span>
-                <button
-                  onClick={() => setRegistrationFilter('all')}
-                  className={`px-4 py-2 rounded-full text-sm font-medium ${
-                    registrationFilter === 'all'
-                      ? 'bg-gray-800 text-white'
-                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                  }`}
-                >
-                  All
-                </button>
-                <button
-                  onClick={() => setRegistrationFilter('open')}
-                  className={`px-4 py-2 rounded-full text-sm font-medium ${
-                    registrationFilter === 'open'
-                      ? 'bg-green-500 text-white'
-                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                  }`}
-                >
-                  Open
-                </button>
-                <button
-                  onClick={() => setRegistrationFilter('closed')}
-                  className={`px-4 py-2 rounded-full text-sm font-medium ${
-                    registrationFilter === 'closed'
-                      ? 'bg-red-500 text-white'
-                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                  }`}
-                >
-                  Closed
-                </button>
+                <div>
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="p-2 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg">
+                      <Star size={20} className="text-white" />
+                    </div>
+                    <span className="text-lg font-bold text-gray-800">Registration Status</span>
+                  </div>
+                  <div className="flex flex-wrap gap-3">
+                    <button
+                      onClick={() => setRegistrationFilter('all')}
+                      className={`px-6 py-3 rounded-2xl font-bold transition-all duration-300 transform hover:scale-105 shadow-md ${
+                        registrationFilter === 'all'
+                          ? 'bg-gradient-to-r from-gray-700 to-gray-900 text-white shadow-lg scale-105'
+                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      }`}
+                    >
+                      All Status
+                    </button>
+                    <button
+                      onClick={() => setRegistrationFilter('open')}
+                      className={`px-6 py-3 rounded-2xl font-bold transition-all duration-300 transform hover:scale-105 shadow-md ${
+                        registrationFilter === 'open'
+                          ? 'bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-lg scale-105'
+                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      }`}
+                    >
+                      ✅ Open
+                    </button>
+                    <button
+                      onClick={() => setRegistrationFilter('closed')}
+                      className={`px-6 py-3 rounded-2xl font-bold transition-all duration-300 transform hover:scale-105 shadow-md ${
+                        registrationFilter === 'closed'
+                          ? 'bg-gradient-to-r from-red-500 to-rose-600 text-white shadow-lg scale-105'
+                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      }`}
+                    >
+                      ❌ Closed
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
 
             {/* Events Grid */}
-            <div>
-              <h2 className="text-2xl font-bold text-gray-800 mb-6">
-                {filteredEvents.length} {filteredEvents.length === 1 ? 'Event' : 'Events'} Found
-              </h2>
+            <div className="animate-fadeIn">
+              <div className="mb-8 flex items-center justify-between">
+                <div>
+                  <h2 className="text-3xl font-extrabold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                    {filteredEvents.length} {filteredEvents.length === 1 ? 'Event' : 'Events'} Available
+                  </h2>
+                  <p className="text-gray-600 mt-1">Sorted by registration deadline</p>
+                </div>
+              </div>
+              
               {filteredEvents.length === 0 ? (
-                <div className="text-center py-12">
-                  <p className="text-gray-500 text-lg">No events match your filters</p>
+                <div className="text-center py-20">
+                  <div className="text-8xl mb-4">🔍</div>
+                  <p className="text-gray-500 text-2xl font-bold">No events match your filters</p>
+                  <p className="text-gray-400 mt-2">Try adjusting your search or filters</p>
                 </div>
               ) : (
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                   {filteredEvents.map(event => (
                     <EventCard
                       key={event.id}

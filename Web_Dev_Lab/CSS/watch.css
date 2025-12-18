@@ -1,0 +1,92 @@
+/* --- Stopwatch Specific Styles --- */
+.main-body{
+    display: flex;
+    place-items: center;
+}
+.stopwatch-card {
+    background: white;
+    width: 100%;
+    max-width: 600px; /* Made slightly wider to fit ms */
+    padding: 50px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+/* Big Digital Clock Display */
+.timer-display {
+    font-family: 'Roboto Mono', monospace; 
+    font-size: 54px; /* Reduced slightly to fit HH:MM:SS:MS */
+    font-weight: 500;
+    color: #333;
+    background: #f9f9f9;
+    padding: 20px 20px;
+    border-radius: 8px;
+    border: 2px solid #eee;
+    width: 100%;
+    letter-spacing: 1px;
+    white-space: nowrap; /* Prevents text from wrapping */
+}
+
+/* Button Layout */
+.controls {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+}
+
+/* Specific Button Colors */
+.controls button {
+    padding: 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    color: white;
+    flex: 1; 
+    transition: transform 0.1s, opacity 0.2s;
+}
+
+.controls button:active {
+    transform: scale(0.98); 
+}
+
+/* Green Start Button */
+.btn-start {
+    background-color: #28a745;
+}
+.btn-start:hover {
+    background-color: #218838;
+}
+
+/* Red Stop Button */
+.btn-stop {
+    background-color: #dc3545;
+}
+.btn-stop:hover {
+    background-color: #c82333;
+}
+
+/* Gray Reset Button */
+.btn-reset {
+    background-color: #6c757d;
+}
+.btn-reset:hover {
+    background-color: #5a6268;
+}
+
+/* Responsive fix for mobile */
+@media (max-width: 600px) {
+    .stopwatch-card {
+        padding: 30px 15px;
+    }
+    .timer-display {
+        font-size: 32px; /* Much smaller on phones to prevent overflow */
+        padding: 15px 10px;
+    }
+}
